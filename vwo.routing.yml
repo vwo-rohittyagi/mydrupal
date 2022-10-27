@@ -1,0 +1,21 @@
+vwo.settings:
+  path: /admin/config/system/vwo
+  defaults:
+    _form: \Drupal\vwo\Form\Settings
+    _title: 'VWO Setup'
+  requirements:
+    _permission: 'administer vwo'
+vwo.settings.visibility:
+  path: /admin/config/system/vwo/visibility
+  defaults:
+    _form: \Drupal\vwo\Form\Visibility
+    _title: Visibility
+  requirements:
+    _permission: 'administer vwo'
+vwo.settings.vwoid:
+  path: /admin/config/system/vwo/vwoid
+  defaults:
+    _form: \Drupal\vwo\Form\ExtractID
+    _title: Extract Account ID
+  requirements:
+    _permission: 'administer vwo'

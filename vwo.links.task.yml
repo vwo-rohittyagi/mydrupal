@@ -1,0 +1,17 @@
+vwo.settings:
+  route_name: vwo.settings
+  title: Settings
+  weight: 0
+  base_route: vwo.settings
+
+vwo.settings.visibility:
+  route_name: vwo.settings.visibility
+  title: Visibility
+  weight: 5
+  base_route: vwo.settings
+
+vwo.settings.vwoid:
+  route_name: vwo.settings.vwoid
+  title: Extract Account ID
+  weight: 10
+  base_route: vwo.settings

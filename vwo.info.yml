@@ -1,0 +1,8 @@
+name: VWO
+type: module
+
+description: "Adds VWO javascript Smart Code to all or some of your site's pages."
+package: Statistics
+configure: vwo.settings
+
+core_version_requirement: ^8.9 || ^9 || ^10
