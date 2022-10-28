@@ -27,7 +27,7 @@ Here are the implementation steps for VWO <> Drupal:
 ## B. Install using Composer (only in Drupal 8.9 and above) -
 
 1. Run this command on your server ->
-`composer require 'drupal/visual_website_optimizer:^1.1'`
+`composer require 'drupal/vwo:^1.0'`
 2. Once the plugin is installed, you will see the successful installation 
    message. On this page, click Enable newly added modules.
 3. Select the checkbox next to the VWO module and then click Save configuration.
