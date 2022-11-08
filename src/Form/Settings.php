@@ -3,7 +3,7 @@
 namespace Drupal\vwo\Form;
 
 use Drupal\Core\Url;
-use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * VWO Settings form.
  */
-class Settings extends FormBase {
+class Settings extends ConfigFormBase {
   /**
    * Messenger Object.
    *
@@ -42,6 +42,15 @@ class Settings extends FormBase {
    */
   public function getFormId() {
     return 'vwo_settings';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEditableConfigNames() {
+    return [
+      'vwo.settings',
+    ];
   }
 
   /**
@@ -124,7 +133,7 @@ class Settings extends FormBase {
     $form['advanced']['asynctollibrary'] = [
       '#type' => 'number',
       '#title' => $this->t('Test Library Download Timeout'),
-      '#description' => $this->t('The maximum time in milliseconds the code snippet will wait for the VWO javascript library to be downloaded from the Amazon Cloudfront Content Delivery Network. If the library is not available in this time, your original page will be displayed without tests. Default: 1500 ms.'),
+      '#description' => $this->t('The maximum time in milliseconds the code snippet will wait for the VWO javascript library to be downloaded from the Amazon Cloudfront Content Delivery Network. If the library is not available in this time, your original page will be displayed without tests. Default: 2500 ms.'),
       '#size' => 10,
       '#min' => 0,
       '#max' => 9999,
@@ -196,7 +205,7 @@ class Settings extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
     // Grab the editable configuration.
-    $config = $this->configFactory()->getEditable('vwo.settings');
+    $config = $this->config('vwo.settings');
 
     // Set each of the configuration values.
     $field_key_config_map = [

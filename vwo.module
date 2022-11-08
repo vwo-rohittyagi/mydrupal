@@ -50,7 +50,7 @@ function vwo_page_attachments(array &$attachments) {
 
     // Per user opt-out.
     $usercontrol = $config->get('filter.userconfig');
-    if ($usercontrol != 'nocontrol' && $account->id()) {
+    if ($usercontrol != 'nocontrol' && $account->isAuthenticated()) {
 
       // Start with default.
       $addjs = ($usercontrol == 'optin') ? FALSE : TRUE;

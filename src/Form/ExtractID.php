@@ -2,7 +2,7 @@
 
 namespace Drupal\vwo\Form;
 
-use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Form to accept full cut'n'paste of <del>Tracking</del>Smart Code from
  * website and pull Account ID from it using preg_match().
  */
-class ExtractID extends FormBase {
+class ExtractID extends ConfigFormBase {
   /**
    * Messenger Object.
    *
@@ -49,17 +49,26 @@ class ExtractID extends FormBase {
   /**
    * {@inheritdoc}
    */
+  protected function getEditableConfigNames() {
+    return [
+      'vwo.settings',
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     $config = $this->config('vwo.settings');
 
     // Display current ID if it exists.
-    $id = $config->get('id');
+    $id = $config->get('id') ?? 'NONE';
     $form['current_id'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Current Account ID'),
       '#disabled' => TRUE,
-      '#default_value' => ($id == NULL) ? 'NONE' : $id,
+      '#default_value' => $id,
       '#size' => 15,
     ];
 
@@ -116,7 +125,7 @@ class ExtractID extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
     // Grab the editable configuration.
-    $config = $this->configFactory()->getEditable('vwo.settings');
+    $config = $this->config('vwo.settings');
 
     // Set the parsed value.
     $config->set('id', $form_state->get('parsed_id'));

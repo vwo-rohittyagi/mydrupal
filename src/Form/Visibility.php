@@ -2,7 +2,7 @@
 
 namespace Drupal\vwo\Form;
 
-use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Administer control over module provided inclusion/visibility of the js on
  * all or only limited pages of the site.
  */
-class Visibility extends FormBase {
+class Visibility extends ConfigFormBase {
   /**
    * Messenger Service Object.
    *
@@ -61,6 +61,15 @@ class Visibility extends FormBase {
    */
   public function getFormId() {
     return 'vwo_settings_visibility';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEditableConfigNames() {
+    return [
+      'vwo.settings',
+    ];
   }
 
   /**
@@ -255,22 +264,14 @@ class Visibility extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     // Translate the nodechecks vlaue in prep for config storage.
     $form_state->setValue('nodechecks', array_keys(array_filter($form_state->getValue('nodechecks'))));
 
     // Translate the rolechecks value in prep for config storage.
     $form_state->setValue('rolechecks', array_keys(array_filter($form_state->getValue('rolechecks'))));
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
-
     // Grab the editable configuration.
-    $config = $this->configFactory()->getEditable('vwo.settings');
+    $config = $this->config('vwo.settings');
 
     // Set each of the configuration values.
     $field_key_config_map = [
@@ -288,7 +289,7 @@ class Visibility extends FormBase {
     // Commit saved configuration.
     $config->save();
 
-    $this->messenger->addStatus('Visibility settings have been saved.');
+    $this->messenger->addStatus($this->t('Visibility settings have been saved.'));
   }
 
 }
