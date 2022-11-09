@@ -4,8 +4,6 @@ namespace Drupal\vwo\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Messenger\MessengerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * FORM: Extract ID.
@@ -14,30 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * website and pull Account ID from it using preg_match().
  */
 class ExtractID extends ConfigFormBase {
-  /**
-   * Messenger Object.
-   *
-   * @var messenger
-   */
-  protected $messenger;
-
-  /**
-   * Class constructor.
-   */
-  public function __construct(MessengerInterface $messenger) {
-    $this->messenger = $messenger;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    // Instantiates this form class.
-    return new static(
-      // Load the service required to construct this class.
-      $container->get('messenger')
-    );
-  }
 
   /**
    * {@inheritdoc}
@@ -136,7 +110,7 @@ class ExtractID extends ConfigFormBase {
     // Redirect back to main settings page.
     $form_state->setRedirect('vwo.settings');
 
-    $this->messenger->addStatus($this->t('Saved Account ID as @id', ['@id' => $form_state->get('parsed_id')]));
+    $this->messenger()->addStatus($this->t('Saved Account ID as @id', ['@id' => $form_state->get('parsed_id')]));
   }
 
 }

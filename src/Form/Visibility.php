@@ -4,7 +4,6 @@ namespace Drupal\vwo\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -16,12 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * all or only limited pages of the site.
  */
 class Visibility extends ConfigFormBase {
-  /**
-   * Messenger Service Object.
-   *
-   * @var messenger
-   */
-  protected $messenger;
   /**
    * Entity type service.
    *
@@ -39,8 +32,7 @@ class Visibility extends ConfigFormBase {
   /**
    * Class constructor.
    */
-  public function __construct(MessengerInterface $messenger, ModuleHandlerInterface $moduleHandler, EntityTypeManagerInterface $entityTypeManager) {
-    $this->messenger = $messenger;
+  public function __construct(ModuleHandlerInterface $moduleHandler, EntityTypeManagerInterface $entityTypeManager) {
     $this->moduleHandler = $moduleHandler;
     $this->entityTypeManager = $entityTypeManager;
   }
@@ -50,10 +42,9 @@ class Visibility extends ConfigFormBase {
    */
   public static function create(ContainerInterface $container) {
     // Instantiates this form class.
-    $messenger = $container->get('messenger');
     $moduleHandler = $container->get('module_handler');
     $entityTypeManager = $container->get('entity_type.manager');
-    return new static($messenger, $moduleHandler, $entityTypeManager);
+    return new static($moduleHandler, $entityTypeManager);
   }
 
   /**
@@ -289,7 +280,7 @@ class Visibility extends ConfigFormBase {
     // Commit saved configuration.
     $config->save();
 
-    $this->messenger->addStatus($this->t('Visibility settings have been saved.'));
+    $this->messenger()->addStatus($this->t('Visibility settings have been saved.'));
   }
 
 }

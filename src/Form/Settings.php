@@ -5,37 +5,11 @@ namespace Drupal\vwo\Form;
 use Drupal\Core\Url;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Messenger\MessengerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * VWO Settings form.
  */
 class Settings extends ConfigFormBase {
-  /**
-   * Messenger Object.
-   *
-   * @var messenger
-   */
-  protected $messenger;
-
-  /**
-   * Class constructor.
-   */
-  public function __construct(MessengerInterface $messenger) {
-    $this->messenger = $messenger;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    // Instantiates this form class.
-    return new static(
-      // Load the service required to construct this class.
-      $container->get('messenger')
-    );
-  }
 
   /**
    * {@inheritdoc}
@@ -222,7 +196,7 @@ class Settings extends ConfigFormBase {
     // Commit saved configuration.
     $config->save();
 
-    $this->messenger->addMessage($this->t('VWO settings have been saved.'));
+    $this->messenger()->addMessage($this->t('VWO settings have been saved.'));
   }
 
 }
