@@ -277,18 +277,17 @@ function _vwo_form_user_form_alter_submit($form, FormStateInterface $form_state)
 function vwo_help($route_name, RouteMatchInterface $route_match) {
 
   if ($route_name == 'vwo.settings'|| $route_name == 'help.page.vwo') {
-
-    module_load_include('inc', 'vwo', 'vwo.help');
+    \Drupal::moduleHandler()->loadInclude('vwo', 'inc', 'vwo.help');
     return _vwo_help_settings();
   }
 
   elseif ($route_name == 'vwo.settings.visibility') {
-    module_load_include('inc', 'vwo', 'vwo.help');
+    \Drupal::moduleHandler()->loadInclude('vwo', 'inc', 'vwo.help');
     return _vwo_help_visibility();
   }
 
   elseif ($route_name == 'vwo.settings.vwoid') {
-    module_load_include('inc', 'vwo', 'vwo.help');
+    \Drupal::moduleHandler()->loadInclude('vwo', 'inc', 'vwo.help');
     return _vwo_help_vwoid();
   }
 }
