@@ -2,9 +2,9 @@
 
 namespace Drupal\vwo\Form;
 
-use Drupal\Core\Url;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 
 /**
  * VWO Settings form.

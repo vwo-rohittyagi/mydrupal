@@ -12,7 +12,7 @@ use Drupal\Core\Url;
  */
 function _vwo_help_settings() {
 
-  list($vwo_url_nopartner) = _vwo_help_links();
+  [$vwo_url_nopartner] = _vwo_help_links();
   $vwo_settings = Url::fromRoute('vwo.settings');
 
   $h[] = t('VWO is an easy to use A/B, split and multivariate testing tool.');
@@ -47,7 +47,7 @@ function _vwo_help_visibility() {
  */
 function _vwo_help_vwoid() {
 
-  list($vwo_url_nopartner) = _vwo_help_links();
+  [$vwo_url_nopartner] = _vwo_help_links();
 
   $h[] = t('Your VWO Account ID can be extracted from the "VWO Smart Code" available from the VWO site.');
   $hl[] = t('Log into your VWO account.');
