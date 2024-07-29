@@ -8,6 +8,7 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Cache\Cache;
 
 /**
  * Implements hook_page_attachments().
@@ -141,6 +142,9 @@ function vwo_page_attachments(array &$attachments) {
 
   // Add JS if we are going to.
   if ($state['add']) {
+    // Set cache tags.
+    $attachments['#cache']['tags'] = Cache::mergeTags($attachments['#cache']['tags'] ?? [], $config->getCacheTags());
+
     $settings = [
       'id' => $id,
     ];
