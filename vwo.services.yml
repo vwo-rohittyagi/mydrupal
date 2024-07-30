@@ -1,4 +1,4 @@
 services:
-  vwo.service:
-    class: Drupal\vwo\Service\VwoService
-    arguments: ['@config.factory', '@current_user', '@path.matcher', '@path.current', '@entity_type.manager', '@current_route_match']
+  vwo.settings_service:
+    class: Drupal\vwo\Service\SettingsService
+    arguments: ['@config.factory']
